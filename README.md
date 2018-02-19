@@ -1,5 +1,7 @@
 # API Stub Generator
 
+[![Build Status](https://travis-ci.org/CuriousLearner/api-stub.svg?branch=master)](https://travis-ci.org/CuriousLearner/api-stub)
+
 Mock proposed API endpoints with stub.
 
 ## Inspiration

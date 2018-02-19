@@ -1,17 +1,22 @@
 [[source]]
 
-verify_ssl = true
 name = "pypi"
+verify_ssl = true
 url = "https://pypi.python.org/simple"
-
-
-[packages]
-
-pytest-datafiles = "*"
-flask = "*"
 
 
 [dev-packages]
 
+pytest-datafiles = "*"
 pytest = "*"
 pytest-cov = "*"
+
+
+[requires]
+
+python_version = "3.6"
+
+
+[packages]
+
+flask = "*"
