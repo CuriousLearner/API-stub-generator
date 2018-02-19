@@ -99,3 +99,11 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# venv
+venv/
+
+# files generated / used by app
+src/app.py
+src/proposed_endpoints.md
+src/endpoints_data.json
