@@ -4,7 +4,6 @@ import unicodedata
 
 
 def slugify(value):
-    value = value.decode('utf-8')
     value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode('ascii')
     value = re.sub(r'[^\w\s-]', '', value).strip().lower()
     return re.sub(r'[-\s]+', '_', value)

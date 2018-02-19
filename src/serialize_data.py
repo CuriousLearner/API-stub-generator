@@ -50,21 +50,21 @@ def get_single_endpoint_detail(lines):
 
 def parse_and_get_json_from_subsequent_lines(lines_iterator):
     try:
-        next_line = lines_iterator.next()
+        next_line = next(lines_iterator)
     except StopIteration:
         return ''
     while next_line != '```json':
         try:
-            next_line = lines_iterator.next()
+            next_line = next(lines_iterator)
         except StopIteration:
             return ''
     # Skip the row having starting json tag
-    next_line = lines_iterator.next()
+    next_line = next(lines_iterator)
     array_of_json_statements = list()
     while next_line != '```':
         array_of_json_statements.append(next_line)
         try:
-            next_line = lines_iterator.next()
+            next_line = next(lines_iterator)
         except StopIteration:
             pass
 
