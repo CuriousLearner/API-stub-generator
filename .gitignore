@@ -107,3 +107,6 @@ venv/
 src/app.py
 src/proposed_endpoints.md
 src/endpoints_data.json
+
+# tests cache
+.pytest_cache/

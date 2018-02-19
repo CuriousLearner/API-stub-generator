@@ -1,0 +1,17 @@
+[[source]]
+
+verify_ssl = true
+name = "pypi"
+url = "https://pypi.python.org/simple"
+
+
+[packages]
+
+pytest-datafiles = "*"
+flask = "*"
+
+
+[dev-packages]
+
+pytest = "*"
+pytest-cov = "*"
