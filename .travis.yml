@@ -17,11 +17,11 @@ install:
   - pip install pipenv
 
 before_script:
-- pipenv install
+- pipenv install --dev
 
 script:
 - flake8
-- pytest --cov -v --tb=native
+- pipenv run pytest --cov -v --tb=native
 
 notifications:
   email:
