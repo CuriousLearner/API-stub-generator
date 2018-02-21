@@ -9,7 +9,7 @@ from src.create_mock_endpoints import generate_code_for_single_mock_api_route
 @pytest.mark.datafiles(
     os.path.join(FIXTURE_DIR, 'endpoints_data.json'),
 )
-def test_data_serialization(datafiles):
+def test_generated_code_from_serialization(datafiles):
     data = datafiles.listdir()[0].read()
 
     json_data = json.loads(data)
