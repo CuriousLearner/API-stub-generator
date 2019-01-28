@@ -95,7 +95,7 @@ def get_json_from_endpoints(lines):
 
 
 @click.command()
-@click.argument('file_path', type=click.Path(exists=True))
+@click.option('--file_path', default='proposed_endpoints.md', help='Path for the proposed endpoints docs')
 def generate_json_from_docs_file(file_path):
     lines = None
     with open(file_path, 'r') as endpoint_file:
