@@ -1,4 +1,5 @@
 import json
+import click
 
 HTTP_VERBS = ('GET', 'POST', 'HEAD', 'OPTIONS', 'PUT', 'PATCH', 'DELETE')
 
@@ -93,9 +94,11 @@ def get_json_from_endpoints(lines):
     return endpoint_json_list
 
 
-def generate_json_from_docs_file(filename='proposed_endpoints.md'):
+@click.command()
+@click.option('--file-path', default='proposed_endpoints.md', help='Path for the proposed endpoints docs')
+def generate_json_from_docs_file(file_path):
     lines = None
-    with open(filename, 'r') as endpoint_file:
+    with open(file_path, 'r') as endpoint_file:
         lines = endpoint_file.read()
     json_data = get_json_from_endpoints(lines)
 
