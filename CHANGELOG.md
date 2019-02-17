@@ -1,10 +1,11 @@
-
-
-2019-1-29
-=======================
+Changelog
+=========
 
 Features & Improvements
 -----------------------
 
-- Allow `serialize_data.py` accept path for proposed endpoints docs as command line argument.
-  Contributor: [Mansi Agrawal](https://github.com/mansiag/)
+#### 2019-1-29
+
+- Allow `serialize_data.py` accept path for proposed endpoints docs as command line argument. ([@mansiag])
+
+[@mansiag]: https://github.com/mansiag
