@@ -6,4 +6,5 @@
 Features & Improvements
 -----------------------
 
-- Allow `serialize_data.py` accept path for proposed endpoints docs as command line argument. [#1](https://github.com/CuriousLearner/API-stub-generator/pull/4)
+- Allow `serialize_data.py` accept path for proposed endpoints docs as command line argument.
+  Contributor: [Mansi Agrawal](https://github.com/mansiag/)
