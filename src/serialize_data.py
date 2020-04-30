@@ -24,10 +24,11 @@ def get_single_endpoint_detail(lines):
             endpoint_details["endpoint"] = endpoint
             endpoint_details["method"] = method
             continue
-        if line.startswith("__Example__"):
+        if line.startswith("**Request**") or line.startswith("__Example__"):
             json_data = parse_and_get_json_from_subsequent_lines(lines_iterator)
             try:
-                endpoint_details["request_body"] = json.loads(json_data)
+                if json_data is not "":
+                    endpoint_details["request_body"] = json.loads(json_data)
             except ValueError as e:
                 print(
                     "Error in parsing request_body of {}: {}".format(
@@ -37,10 +38,11 @@ def get_single_endpoint_detail(lines):
                 print("Invalid JSON: {}".format(json_data))
                 return None
             continue
-        if line.startswith("__Response__"):
+        if line.startswith("**Response**") or line.startswith("__Response__"):
             json_data = parse_and_get_json_from_subsequent_lines(lines_iterator)
             try:
-                endpoint_details["response_body"] = json.loads(json_data)
+                if json_data is not "":
+                    endpoint_details["response_body"] = json.loads(json_data)
             except ValueError as e:
                 print(
                     "Error in parsing response_body of {}: {}".format(
@@ -60,6 +62,10 @@ def parse_and_get_json_from_subsequent_lines(lines_iterator):
         return ""
     while next_line != "```json":
         try:
+            # To handle case when an empty request body
+            # is provided.
+            if next_line.startswith("No-Content"):
+                raise StopIteration
             next_line = next(lines_iterator)
         except StopIteration:
             return ""
