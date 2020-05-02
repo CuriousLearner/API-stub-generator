@@ -1,4 +1,5 @@
 import json
+
 import click
 
 HTTP_VERBS = ("GET", "POST", "HEAD", "OPTIONS", "PUT", "PATCH", "DELETE")
@@ -27,7 +28,7 @@ def get_single_endpoint_detail(lines):
         if line.startswith("**Request**") or line.startswith("__Example__"):
             json_data = parse_and_get_json_from_subsequent_lines(lines_iterator)
             try:
-                if json_data is not "":
+                if json_data != "":
                     endpoint_details["request_body"] = json.loads(json_data)
             except ValueError as e:
                 print(
@@ -41,7 +42,7 @@ def get_single_endpoint_detail(lines):
         if line.startswith("**Response**") or line.startswith("__Response__"):
             json_data = parse_and_get_json_from_subsequent_lines(lines_iterator)
             try:
-                if json_data is not "":
+                if json_data != "":
                     endpoint_details["response_body"] = json.loads(json_data)
             except ValueError as e:
                 print(

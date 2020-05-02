@@ -107,6 +107,7 @@ venv/
 src/app.py
 src/proposed_endpoints.md
 src/endpoints_data.json
+src/endpoints_data_insomnia.json
 
 # tests cache
 .pytest_cache/
