@@ -101,13 +101,16 @@ def get_json_from_endpoints(lines):
 @click.command()
 @click.option(
     "--file-path",
-    default="proposed_endpoints.md",
+    "-f",
+    multiple=True,
+    default=["proposed_endpoints.md"],
     help="Path for the proposed endpoints docs",
 )
 def generate_json_from_docs_file(file_path):
-    lines = None
-    with open(file_path, "r") as endpoint_file:
-        lines = endpoint_file.read()
+    lines = ''
+    for path in file_path:
+        with open(path, "r") as endpoint_file:
+            lines += endpoint_file.read()
     json_data = get_json_from_endpoints(lines)
 
     with open("endpoints_data.json", "w") as json_file:
