@@ -32,13 +32,17 @@ pipenv install
 
 ## Usage
 
-- Run `pipenv run python serialize_data.py` to generate JSON file named `endpoints_data.json`. Optionally, you can specify the path of the proposed endpoints docs  using `--file-path` or `-f` option like:
+- Run `pipenv run python serialize_data.py` to generate JSON file named `endpoints_data.json`. However, you have to specify the path of the proposed endpoints docs as
 
-    ```pipenv run python serialize_data.py --file-path /path/to/proposed_endpoints.md```
+    ```pipenv run python serialize_data.py /path/to/proposed_endpoints.md```
 
-    You can also provide multiple files as
+    You can also provide multiple files by using the regex shorthand as
 
-    ```pipenv run python serialize_data.py -f /path/to/proposed_endpoints.md -f path/to/another_proposed_endpoints.md```
+    ```pipenv run python serialize_data.py *.md```
+
+    If files resides at different paths, then you may provide them as positional argument to it.  For e.g
+
+    ```pipenv run python serialize_data.py /path/to/some_file.md /path/to/another_file.md```
 
 - Run `pipenv run python create_mock_endpoints.py` to generate `app.py` with all the code for the Mocked end points.
 
