@@ -99,15 +99,24 @@ def get_json_from_endpoints(lines):
 
 
 @click.command()
-@click.option(
-    "--file-path",
-    default="proposed_endpoints.md",
-    help="Path for the proposed endpoints docs",
+@click.argument(
+    "file_paths",
+    nargs=-1,
+    type=click.Path(exists=True),
+    required=True,
 )
-def generate_json_from_docs_file(file_path):
-    lines = None
-    with open(file_path, "r") as endpoint_file:
-        lines = endpoint_file.read()
+def generate_json_from_docs_file(file_paths):
+    """
+    FILE_PATHS: Path(s) to the proposed endpoints docs. This can have multiple file values like
+
+    serialize_data.py proposed_endpoint.md api_endpoint.md
+
+    serialize_data.py *.md
+    """
+    lines = ''
+    for path in file_paths:
+        with open(path, "r") as endpoint_file:
+            lines += endpoint_file.read()
     json_data = get_json_from_endpoints(lines)
 
     with open("endpoints_data.json", "w") as json_file:
