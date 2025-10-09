@@ -1,20 +1,22 @@
-import os
-import pytest
 import json
+import os
+
+import pytest
+
+from src.create_mock_endpoints import generate_code_for_single_mock_api_route
 
 from .utils import FIXTURE_DIR
-from src.create_mock_endpoints import generate_code_for_single_mock_api_route
 
 
 @pytest.mark.datafiles(os.path.join(FIXTURE_DIR, "endpoints_data.json"))
 def test_generated_code_from_serialization(datafiles):
-    data = datafiles.listdir()[0].read()
+    data = (datafiles / "endpoints_data.json").read_text()
 
     json_data = json.loads(data)
     for each_endpoint in json_data:
         generated_code = generate_code_for_single_mock_api_route(each_endpoint)
         expected_response = str(
-            u"@app.route('/api/users/login', methods=['POST'])"
+            "@app.route('/api/users/login', methods=['POST'])"
             "\ndef login_to_the_app():\n    return Response("
             'json.dumps({"auth_token": "qduvpuMvqZUx4Emcpevp.RaGnPgoGZKvGBUHDuiv'
             'wkvFQowYcwFq.FUGArGvzzfeGe", "email": "john@example.com", '

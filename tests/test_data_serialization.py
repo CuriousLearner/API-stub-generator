@@ -1,14 +1,16 @@
-import os
-import pytest
 import json
+import os
+
+import pytest
+
+from src.serialize_data import get_json_from_endpoints
 
 from .utils import FIXTURE_DIR
-from src.serialize_data import get_json_from_endpoints
 
 
 @pytest.mark.datafiles(os.path.join(FIXTURE_DIR, "proposed_endpoints.md"))
 def test_data_serialization(datafiles):
-    lines = datafiles.listdir()[0].read()
+    lines = (datafiles / "proposed_endpoints.md").read_text()
 
     json_data = json.dumps(get_json_from_endpoints(lines), sort_keys=True)
 

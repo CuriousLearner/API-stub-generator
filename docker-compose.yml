@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  api-stub-generator:
+    build: .
+    volumes:
+      - ./proposed_endpoints.md:/app/proposed_endpoints.md
+      - ./app.py:/app/app.py
+      - ./endpoints_data.json:/app/endpoints_data.json
+      - ./openapi.json:/app/openapi.json
+    command: api-stub-gen generate
+
+  api-stub-server:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./app.py:/app/app.py
+    command: python app.py
+    depends_on:
+      - api-stub-generator

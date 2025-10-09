@@ -1,0 +1,24 @@
+# API Stub Generator Configuration File
+# Copy this file to .stubrc.yml and customize as needed
+
+# Input markdown file with proposed endpoints
+input_file: proposed_endpoints.md
+
+# Output JSON file for parsed endpoints
+output_file: endpoints_data.json
+
+# Generated application file
+app_file: app.py
+
+# Framework to use: flask or fastapi
+framework: flask
+
+# Enable CORS for all routes
+enable_cors: true
+
+# Enable debug/development mode with auto-reload
+debug_mode: true
+
+# Server configuration
+port: 5000
+host: localhost
