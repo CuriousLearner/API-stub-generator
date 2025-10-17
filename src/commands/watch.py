@@ -30,7 +30,8 @@ class EndpointFileHandler(FileSystemEventHandler):
 
         self.last_modified = current_time
 
-        click.echo(click.style(f"\n📝 File changed: {event.src_path}", fg="yellow"))
+        src_path = event.src_path if isinstance(event.src_path, str) else event.src_path.decode()
+        click.echo(click.style(f"\n📝 File changed: {src_path}", fg="yellow"))
         click.echo(click.style("🔄 Regenerating stubs...", fg="cyan"))
 
         # Trigger regeneration

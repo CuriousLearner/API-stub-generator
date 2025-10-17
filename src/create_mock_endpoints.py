@@ -15,9 +15,9 @@ def slugify(value: str) -> str:
 def generate_code_for_single_mock_api_route(endpoint_data: dict[str, Any]) -> str:
     if not endpoint_data["endpoint"] or not endpoint_data["method"]:
         return ""
-    output_data = "@app.route('" + endpoint_data["endpoint"] + "'"
-    output_data += ", methods=['" + endpoint_data["method"] + "'])\n"
-    output_data += "def " + slugify(endpoint_data["description"]) + "():\n"
+    output_data = "@app.route('" + str(endpoint_data["endpoint"]) + "'"
+    output_data += ", methods=['" + str(endpoint_data["method"]) + "'])\n"
+    output_data += "def " + slugify(str(endpoint_data["description"])) + "():\n"
     output_data += (
         "    return Response(json.dumps(" + str(json.dumps(endpoint_data["response_body"], sort_keys=True)) + "), "
     )
