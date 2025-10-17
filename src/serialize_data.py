@@ -1,16 +1,21 @@
+from __future__ import annotations
+
 import json
+from collections.abc import Iterator
+from typing import Any
+
 import click
 
 HTTP_VERBS = ("GET", "POST", "HEAD", "OPTIONS", "PUT", "PATCH", "DELETE")
 
 
-def get_single_endpoint_detail(lines):
-    endpoint_details = {
-        "endpoint": str(),
-        "method": str(),
-        "description": str(),
-        "request_body": str(),
-        "response_body": str(),
+def get_single_endpoint_detail(lines: list[str]) -> dict[str, Any] | None:
+    endpoint_details: dict[str, Any] = {
+        "endpoint": "",
+        "method": "",
+        "description": "",
+        "request_body": "",
+        "response_body": "",
     }
     lines_iterator = iter(lines)
     for line in lines_iterator:
@@ -29,12 +34,8 @@ def get_single_endpoint_detail(lines):
             try:
                 endpoint_details["request_body"] = json.loads(json_data)
             except ValueError as e:
-                print(
-                    "Error in parsing request_body of {}: {}".format(
-                        endpoint_details["endpoint"], e
-                    )
-                )
-                print("Invalid JSON: {}".format(json_data))
+                print("Error in parsing request_body of {}: {}".format(endpoint_details["endpoint"], e))
+                print(f"Invalid JSON: {json_data}")
                 return None
             continue
         if line.startswith("__Response__"):
@@ -42,18 +43,14 @@ def get_single_endpoint_detail(lines):
             try:
                 endpoint_details["response_body"] = json.loads(json_data)
             except ValueError as e:
-                print(
-                    "Error in parsing response_body of {}: {}".format(
-                        endpoint_details["endpoint"], e
-                    )
-                )
-                print("Invalid JSON: {}".format(json_data))
+                print("Error in parsing response_body of {}: {}".format(endpoint_details["endpoint"], e))
+                print(f"Invalid JSON: {json_data}")
                 return None
             continue
     return endpoint_details
 
 
-def parse_and_get_json_from_subsequent_lines(lines_iterator):
+def parse_and_get_json_from_subsequent_lines(lines_iterator: Iterator[str]) -> str:
     try:
         next_line = next(lines_iterator)
     except StopIteration:
@@ -65,7 +62,7 @@ def parse_and_get_json_from_subsequent_lines(lines_iterator):
             return ""
     # Skip the row having starting json tag
     next_line = next(lines_iterator)
-    array_of_json_statements = list()
+    array_of_json_statements: list[str] = []
     while next_line != "```":
         array_of_json_statements.append(next_line)
         try:
@@ -78,12 +75,10 @@ def parse_and_get_json_from_subsequent_lines(lines_iterator):
     return json_statements
 
 
-def get_json_from_endpoints(lines):
+def get_json_from_endpoints(lines: str) -> list[dict[str, Any]]:
     all_lines = lines.split("\n")
-    next_endpoint_starting_location = [
-        i for i, line in enumerate(all_lines) if line.startswith("##")
-    ]
-    endpoint_json_list = list()
+    next_endpoint_starting_location = [i for i, line in enumerate(all_lines) if line.startswith("##")]
+    endpoint_json_list: list[dict[str, Any]] = []
     for x in range(len(next_endpoint_starting_location)):
         starting_point = next_endpoint_starting_location[x]
         try:
@@ -104,9 +99,8 @@ def get_json_from_endpoints(lines):
     default="proposed_endpoints.md",
     help="Path for the proposed endpoints docs",
 )
-def generate_json_from_docs_file(file_path):
-    lines = None
-    with open(file_path, "r") as endpoint_file:
+def generate_json_from_docs_file(file_path: str) -> None:
+    with open(file_path) as endpoint_file:
         lines = endpoint_file.read()
     json_data = get_json_from_endpoints(lines)
 

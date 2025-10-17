@@ -1,0 +1,39 @@
+import json
+
+from flask import Flask, Response, request{% if enable_cors %}, jsonify
+from flask_cors import CORS{% endif %}
+
+app = Flask(__name__)
+{% if enable_cors %}
+CORS(app)  # Enable CORS for all routes
+{% endif %}
+
+{% for endpoint in endpoints %}
+@app.route('{{ endpoint.endpoint }}', methods=['{{ endpoint.method }}'])
+def {{ endpoint.function_name }}():
+    """{{ endpoint.description }}"""
+    {% if endpoint.method in ['POST', 'PUT', 'PATCH'] and endpoint.request_body %}
+    # Request body validation
+    if not request.is_json:
+        return jsonify({"error": "Content-Type must be application/json"}), 400
+
+    request_data = request.get_json()
+    # TODO: Add schema validation here if needed
+    {% endif %}
+
+    response_data = {{ endpoint.response_body | tojson }}
+    return Response(
+        json.dumps(response_data),
+        mimetype='application/json; charset=utf-8'
+    )
+
+{% endfor %}
+
+@app.route('/health', methods=['GET'])
+def health_check():
+    """Health check endpoint"""
+    return jsonify({"status": "healthy", "endpoints": {{ endpoints | length }}})
+
+
+if __name__ == '__main__':
+    app.run(host='{{ host }}', port={{ port }}, debug={{ debug_mode | tojson }})

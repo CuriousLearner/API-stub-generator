@@ -1,0 +1,47 @@
+from typing import Any, Dict
+
+from fastapi import FastAPI, Request{% if enable_cors %}, HTTPException
+from fastapi.middleware.cors import CORSMiddleware{% endif %}
+from fastapi.responses import JSONResponse
+
+app = FastAPI(
+    title="API Stub Server",
+    description="Mock API stubs from proposed endpoints",
+    version="1.0.0",
+    docs_url="/docs",
+    redoc_url="/redoc",
+)
+
+{% if enable_cors %}
+# Enable CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+{% endif %}
+
+{% for endpoint in endpoints %}
+@app.{{ endpoint.method.lower() }}('{{ endpoint.endpoint }}')
+async def {{ endpoint.function_name }}({% if endpoint.method in ['POST', 'PUT', 'PATCH'] and endpoint.request_body %}request_body: Dict[str, Any]{% endif %}):
+    """{{ endpoint.description }}"""
+    {% if endpoint.method in ['POST', 'PUT', 'PATCH'] and endpoint.request_body %}
+    # Request body is automatically validated by FastAPI
+    # TODO: Add Pydantic model for strict validation
+    {% endif %}
+    response_data = {{ endpoint.response_body | tojson }}
+    return JSONResponse(content=response_data)
+
+{% endfor %}
+
+@app.get('/health')
+async def health_check():
+    """Health check endpoint"""
+    return {"status": "healthy", "endpoints": {{ endpoints | length }}}
+
+
+if __name__ == '__main__':
+    import uvicorn
+    uvicorn.run(app, host='{{ host }}', port={{ port }}, reload={{ debug_mode | tojson }})

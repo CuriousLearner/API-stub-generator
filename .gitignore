@@ -103,10 +103,26 @@ ENV/
 # venv
 venv/
 
-# files generated / used by app
-src/app.py
-src/proposed_endpoints.md
-src/endpoints_data.json
+# Generated files from API stub generator
+app.py
+endpoints_data.json
+openapi.json
+proposed_endpoints.md
+
+# Configuration (keep example)
+.stubrc.yml
+.stubrc.yaml
+stub.yml
+stub.yaml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
 
 # tests cache
 .pytest_cache/
+
+# Ruff cache
+.ruff_cache/
