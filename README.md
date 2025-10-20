@@ -164,10 +164,11 @@ The tool generates:
 | Feature | Flask | FastAPI |
 |---------|-------|---------|
 | Auto docs | ❌ | ✅ (`/docs`, `/redoc`) |
-| Type hints | ✅ | ✅ |
-| Async support | ❌ | ✅ |
-| Setup speed | ⚡ Faster | 🐢 Slower |
-| Performance | Good | Better |
+| Type hints | Optional | Required |
+| Async support | ✅ (2.0+) | ✅ (Native) |
+| Initial complexity | Simple | More setup |
+| Runtime performance | Good | ⚡ Faster |
+| Learning curve | Gentle | Steeper |
 
 ### Validation
 
